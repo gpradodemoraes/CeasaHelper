@@ -17,6 +17,7 @@ class CChildView : public CWnd {
 	CMyDialog1 m_dlg1;
 	CMyDialog2 m_dlg2;
 	CMyDialog3 m_dlg3;
+
 	// Operations
    public:
 	void ShowDialog(int n);
@@ -33,5 +34,6 @@ class CChildView : public CWnd {
 	// afx_msg void OnPaint();
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
+	afx_msg void OnSize(UINT nType, int cx, int cy);
 	DECLARE_MESSAGE_MAP()
 };

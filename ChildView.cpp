@@ -20,6 +20,7 @@ BEGIN_MESSAGE_MAP(CChildView, CWnd)
 ON_WM_CREATE()
 ON_WM_SYSKEYDOWN()
 ON_WM_KEYDOWN()
+ON_WM_SIZE()
 END_MESSAGE_MAP()
 
 // CChildView message handlers
@@ -73,4 +74,16 @@ void CChildView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) {
 	if (nChar == VK_F2) ShowDialog(2);
 	if (nChar == VK_F3) ShowDialog(3);
 	CWnd::OnKeyDown(nChar, nRepCnt, nFlags);
+}
+
+void CChildView::OnSize(UINT nType, int cx, int cy) {
+	CWnd::OnSize(nType, cx, cy);
+
+	CMyDialog *dialogList[] = { static_cast<CMyDialog *>(&m_dlg1), static_cast<CMyDialog *>(&m_dlg2),
+								static_cast<CMyDialog *>(&m_dlg3) };
+	for (CMyDialog *dlg : dialogList) {
+		if (dlg && IsWindow(dlg->GetSafeHwnd())) {
+			dlg->CenterWindow(this);
+		}
+	}
 }
