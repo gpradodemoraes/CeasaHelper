@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="CeasaHelper.vcxproj" Id="eea03c8a-c390-88d8-1208-1c6f6aa37131" />
+</Solution>
