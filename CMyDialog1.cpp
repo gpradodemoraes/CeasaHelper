@@ -9,6 +9,16 @@ CMyDialog1::~CMyDialog1() {}
 
 void CMyDialog1::DoDataExchange(CDataExchange *pDX) { CDialog::DoDataExchange(pDX); }
 
+BOOL CMyDialog1::OnInitDialog() {
+	CWnd *pStatic = GetDlgItem(IDC_HOME_KEYS);
+	pStatic->SetWindowText(
+		_T("F1: Mostrar essa tela\r\n\r\n"
+		   "S : Combinações de somas de lista de números\r\n\r\n"
+		   "P : Provisões de Férias e 13º"));
+	return TRUE;
+}
+
 BEGIN_MESSAGE_MAP(CMyDialog1, CDialog) // ← must be here!
 ON_WM_KEYDOWN()
+// ON_WM_CREATE()
 END_MESSAGE_MAP()

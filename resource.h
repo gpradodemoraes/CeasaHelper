@@ -18,6 +18,8 @@
 #define IDC_NAME3 1006
 #define IDC_EMAIL3 1007
 #define IDC_BUTTON3 1008
+#define IDC_EDIT1 1015
+#define IDC_HOME_KEYS 1016
 
 // Next default values for new objects
 //
@@ -25,7 +27,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE 311
 #define _APS_NEXT_COMMAND_VALUE 32771
-#define _APS_NEXT_CONTROL_VALUE 1009
+#define _APS_NEXT_CONTROL_VALUE 1017
 #define _APS_NEXT_SYMED_VALUE 310
 #endif
 #endif
