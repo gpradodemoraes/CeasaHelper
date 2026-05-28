@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Farofa2S.h">
+    <ClInclude Include="CeasaHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="framework.h">
@@ -38,7 +38,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Farofa2S.cpp">
+    <ClCompile Include="CeasaHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MainFrm.cpp">
@@ -52,17 +52,17 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Farofa2S.rc">
+    <ResourceCompile Include="CeasaHelper.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\Farofa2S.rc2">
+    <None Include="res\CeasaHelper.rc2">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\Farofa2S.ico">
+    <Image Include="res\CeasaHelper.ico">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
