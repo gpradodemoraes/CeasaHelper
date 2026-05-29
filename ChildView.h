@@ -5,6 +5,8 @@
 #include "CMyDialog1.h"
 #include "CMyDialog2.h"
 #include "CMyDialog3.h"
+#include <vector>
+#include <memory>
 
 // CChildView window
 
@@ -29,6 +31,9 @@ class CChildView : public CWnd {
    public:
 	virtual ~CChildView();
 
+   private:
+	BOOL is_home_visible = false;
+	std::unique_ptr<std::vector<CMyDialog *>> dialogList;
 	// Generated message map functions
    protected:
 	// afx_msg void OnPaint();

@@ -26,9 +26,20 @@ END_MESSAGE_MAP()
 // CChildView message handlers
 
 void CChildView::ShowDialog(int n) {
-	m_dlg1.ShowWindow(n == 1 ? SW_SHOW : SW_HIDE);
-	m_dlg2.ShowWindow(n == 2 ? SW_SHOW : SW_HIDE);
-	m_dlg3.ShowWindow(n == 3 ? SW_SHOW : SW_HIDE);
+	for (int i = 0; i < dialogList->size(); ++i) {
+		if (i + 1 == n) {
+			dialogList->at(i)->ShowWindow(SW_SHOW);
+			dialogList->at(i)->EnableWindow(TRUE);
+			GetParent()->SetFocus();
+		} else {
+			dialogList->at(i)->ShowWindow(SW_HIDE);
+			dialogList->at(i)->EnableWindow(FALSE);
+		}
+	}
+	if (n == 1)
+		is_home_visible = TRUE;
+	else
+		is_home_visible = FALSE;
 }
 
 BOOL CChildView::PreCreateWindow(CREATESTRUCT &cs) {
@@ -57,12 +68,11 @@ int CChildView::OnCreate(LPCREATESTRUCT lpCreateStruct) {
 	m_dlg2.Create(IDD_MY_DIALOG2, this);
 	m_dlg3.Create(IDD_MY_DIALOG3, this);
 
-	// Resize all dialogs to fill CChildView
-	// CRect rect;
-	// GetClientRect(&rect);
-	// m_dlg1.MoveWindow(rect);
-	// m_dlg2.MoveWindow(rect);
-	// m_dlg3.MoveWindow(rect);
+	dialogList = std::make_unique<std::vector<CMyDialog *>>();
+
+	dialogList->push_back(static_cast<CMyDialog *>(&m_dlg1));
+	dialogList->push_back(static_cast<CMyDialog *>(&m_dlg2));
+	dialogList->push_back(static_cast<CMyDialog *>(&m_dlg3));
 
 	ShowDialog(1);
 
@@ -70,9 +80,16 @@ int CChildView::OnCreate(LPCREATESTRUCT lpCreateStruct) {
 }
 
 void CChildView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) {
-	if (nChar == VK_F1) ShowDialog(1);
-	if (nChar == VK_F2) ShowDialog(2);
-	if (nChar == VK_F3) ShowDialog(3);
+	if (nChar == VK_F1) {
+		ShowDialog(1);
+		CWnd::OnKeyDown(nChar, nRepCnt, nFlags);
+		return;
+	}
+	if (is_home_visible) {
+		if (nChar == 'S') ShowDialog(2);
+		if (nChar == 'P') ShowDialog(3);
+		return;
+	}
 	CWnd::OnKeyDown(nChar, nRepCnt, nFlags);
 }
 
