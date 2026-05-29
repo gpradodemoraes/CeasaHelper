@@ -1,4 +1,4 @@
-// MainFrm.cpp : implementation of the CMainFrame class
+﻿// MainFrm.cpp : implementation of the CMainFrame class
 //
 
 #include "pch.h"
@@ -50,6 +50,17 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct) {
 		return -1; // fail to create
 	}
 	m_wndStatusBar.SetIndicators(indicators, sizeof(indicators) / sizeof(UINT));
+
+	int screenW = GetSystemMetrics(SM_CXSCREEN);
+	int screenH = GetSystemMetrics(SM_CYSCREEN);
+
+	int windowWidth = static_cast<int>(screenW / 1.5);
+	int windowHeight = static_cast<int>(screenH / 1.5);
+
+	int x = (screenW - windowWidth) / 2;
+	int y = (screenH - windowHeight) / 2;
+
+	SetWindowPos(nullptr, x, y, windowWidth, windowHeight, SWP_NOZORDER);
 
 	return 0;
 }
