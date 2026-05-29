@@ -14,7 +14,7 @@ void CMyDialog2::OnShowWindow(BOOL bShow, UINT nStatus) {
 	CDialog::OnShowWindow(bShow, nStatus);
 
 	if (bShow) {
-		PostMessage(WM_NEXTDLGCTL, (WPARAM)GetDlgItem(IDC_NAME2)->GetSafeHwnd(), TRUE);
+		PostMessage(WM_NEXTDLGCTL, (WPARAM)GetDlgItem(IDC_D2_MINIMOBOX)->GetSafeHwnd(), TRUE);
 	}
 }
 
