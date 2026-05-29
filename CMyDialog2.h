@@ -12,5 +12,6 @@ class CMyDialog2 : public CMyDialog {
 
    protected:
 	virtual void DoDataExchange(CDataExchange *pDX) override;
+	void OnShowWindow(BOOL bShow, UINT nStatus);
 	DECLARE_MESSAGE_MAP()
 };
