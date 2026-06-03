@@ -11,6 +11,9 @@ class CMyDialog2 : public CMyDialog {
 	virtual ~CMyDialog2();
 
    protected:
+	virtual void OnOK() override {}
+
+	virtual BOOL PreTranslateMessage(MSG *pMsg) override;
 	virtual void DoDataExchange(CDataExchange *pDX) override;
 	void OnShowWindow(BOOL bShow, UINT nStatus);
 	DECLARE_MESSAGE_MAP()
