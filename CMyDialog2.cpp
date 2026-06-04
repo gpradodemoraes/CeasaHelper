@@ -8,17 +8,21 @@ IMPLEMENT_DYNAMIC(CMyDialog2, CMyDialog) // ← must be here!
 
 CMyDialog2::~CMyDialog2() {}
 
+void CMyDialog2::OnBnClickedD2Button() { MessageBox(_T("Button Clicked !"), _T("Ready"), MB_OK); }
+
 BOOL CMyDialog2::PreTranslateMessage(MSG *pMsg) {
 	if (pMsg->message == WM_KEYDOWN) {
 		// SetDlgItemInt(IDC_D2_NUMEROSBOX, LOWORD(pMsg->wParam));
 		if (LOWORD(pMsg->wParam) == VK_RETURN) {
 			// HWND hEdit = GetDlgItem(IDC_D2_NUMEROSBOX)->GetSafeHwnd();
-			GetDlgItem(IDC_D2_NUMEROSBOX)->SendMessage(EM_SETSEL, (WPARAM)-1, (LPARAM)-1);
-			// SendMessage( EM_SETSEL, (WPARAM)-1, (LPARAM)-1);
-
-			// Append the text
-			char force_new_line[] = { 0x0D, 0x00, 0x0A, 0x00, 0x00, 0x00 };
-			GetDlgItem(IDC_D2_NUMEROSBOX)->SendMessage(EM_REPLACESEL, FALSE, (LPARAM)force_new_line);
+			if (GetFocus() == GetDlgItem(IDC_D2_NUMEROSBOX)) {
+				GetDlgItem(IDC_D2_NUMEROSBOX)->SendMessage(EM_SETSEL, (WPARAM)-1, (LPARAM)-1);
+				char force_new_line[] = { 0x0D, 0x00, 0x0A, 0x00, 0x00, 0x00 };
+				GetDlgItem(IDC_D2_NUMEROSBOX)->SendMessage(EM_REPLACESEL, FALSE, (LPARAM)force_new_line);
+			} else if (GetFocus() == GetDlgItem(IDC_D2_BUTTON)) {
+				MessageBox(_T("Button Pressed !"), _T("Ready"), MB_OK);
+				return TRUE;
+			}
 
 		} else if ((LOWORD(pMsg->wParam) >= '0' && LOWORD(pMsg->wParam) <= '9') ||
 				   LOWORD(pMsg->wParam) == VK_OEM_COMMA || LOWORD(pMsg->wParam) == VK_OEM_PERIOD ||
@@ -52,4 +56,5 @@ void CMyDialog2::OnShowWindow(BOOL bShow, UINT nStatus) {
 BEGIN_MESSAGE_MAP(CMyDialog2, CDialog) // ← must be here!
 ON_WM_KEYDOWN()
 ON_WM_SHOWWINDOW()
+ON_BN_CLICKED(IDC_D2_BUTTON, &CMyDialog2::OnBnClickedD2Button)
 END_MESSAGE_MAP()

@@ -9,6 +9,7 @@ class CMyDialog2 : public CMyDialog {
 	CMyDialog2(CWnd *pParent = nullptr) : CMyDialog(IDD_MY_DIALOG2, pParent) {}
 
 	virtual ~CMyDialog2();
+	afx_msg void OnBnClickedD2Button();
 
    protected:
 	virtual void OnOK() override {}
