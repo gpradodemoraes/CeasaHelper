@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 #include "CMyDialog2.h"
 #include "resource.h"
+#include <CeasaDllHeader.h>
 
 IMPLEMENT_DYNAMIC(CMyDialog2, CMyDialog) // ← must be here!
 
@@ -20,7 +21,12 @@ BOOL CMyDialog2::PreTranslateMessage(MSG *pMsg) {
 				char force_new_line[] = { 0x0D, 0x00, 0x0A, 0x00, 0x00, 0x00 };
 				GetDlgItem(IDC_D2_NUMEROSBOX)->SendMessage(EM_REPLACESEL, FALSE, (LPARAM)force_new_line);
 			} else if (GetFocus() == GetDlgItem(IDC_D2_BUTTON)) {
-				MessageBox(_T("Button Pressed !"), _T("Ready"), MB_OK);
+				const char **dll_build_data = get_dll_data();
+				int size = MultiByteToWideChar(CP_ACP, 0, *dll_build_data, -1, NULL, 0);
+				wchar_t *wStr = new wchar_t[size];
+				MultiByteToWideChar(CP_ACP, 0, *dll_build_data, -1, wStr, size);
+				MessageBox(wStr, _T("Ready"), MB_OK);
+				delete[] wStr;
 				return TRUE;
 			}
 

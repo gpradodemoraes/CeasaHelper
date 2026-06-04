@@ -1,5 +1,13 @@
 ﻿.vs
 !.vs/launch.vs.json
 x64
+x86
 CeasaHelper.aps
 CeasaHelper
+*.user
+*.suo
+*.obj
+*.pdb
+*.ilk
+*.exp
+*.idb
