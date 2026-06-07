@@ -1,7 +1,9 @@
 ﻿#include "pch.h"
 #include "CMyDialog2.h"
 #include "resource.h"
+#include "ShowSomaResults.h"
 #include <CeasaDllHeader.h>
+#include <vector>
 
 IMPLEMENT_DYNAMIC(CMyDialog2, CMyDialog) // ← must be here!
 
@@ -21,6 +23,29 @@ BOOL CMyDialog2::PreTranslateMessage(MSG *pMsg) {
 				char force_new_line[] = { 0x0D, 0x00, 0x0A, 0x00, 0x00, 0x00 };
 				GetDlgItem(IDC_D2_NUMEROSBOX)->SendMessage(EM_REPLACESEL, FALSE, (LPARAM)force_new_line);
 			} else if (GetFocus() == GetDlgItem(IDC_D2_BUTTON)) {
+				const std::vector<double> lista = { 1.2, 2.2, 3.2, 4.2, 5.2 };
+				double progress{ 0.0 };
+				double *result;
+				achar_soma_lista_numeros(&lista, 3.0, 9.0, &result, &progress);
+
+				CShowSomaResults dlg(AfxGetMainWnd()); // 'this' = parent window
+				dlg.m_resultsText = _T("Generated results go here...");
+
+				dlg.DoModal();
+				INT_PTR retcode = dlg.DoModal();
+
+				if (retcode == -1) {
+					// Dialog failed to create
+					DWORD err = GetLastError();
+					CString msg;
+					msg.Format(_T("DoModal failed. GetLastError = %d"), err);
+					AfxMessageBox(msg);
+				}
+				if (dlg.DoModal() == IDOK) {
+					// User clicked OK
+				}
+				achar_soma_free_pointer();
+
 				const char **dll_build_data = get_dll_data();
 				int size = MultiByteToWideChar(CP_ACP, 0, *dll_build_data, -1, NULL, 0);
 				wchar_t *wStr = new wchar_t[size];

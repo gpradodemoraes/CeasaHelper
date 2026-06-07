@@ -48,6 +48,9 @@
     <ClInclude Include="CMyDialog3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ShowSomaResults.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CeasaHelper.cpp">
@@ -72,6 +75,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CMyDialog3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ShowSomaResults.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

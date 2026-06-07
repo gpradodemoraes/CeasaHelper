@@ -1,4 +1,4 @@
-//{{NO_DEPENDENCIES}}
+﻿//{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
 // Used by CeasaHelper.rc
 //
@@ -7,6 +7,7 @@
 #define IDD_MY_DIALOG3 3
 #define IDD_ABOUTBOX 100
 #define IDR_MAINFRAME 101
+#define IDD_SHOW_SOMA_RESULTS 101
 #define IDC_D2_MINIMOBOX 1000
 #define IDC_D2_MAXIMOBOX 1001
 #define IDC_D2_BUTTON 1002
@@ -18,14 +19,16 @@
 #define IDC_BUTTON3 1008
 #define IDC_HOME_KEYS 1009
 #define IDC_D2_NUMEROS 1010
+#define IDC_SOMA_LIST_RESULTS 1011
+#define IDC_SHOW_SOMA_CLOSE 1012
 
 // Next default values for new objects
 //
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE 311
+#define _APS_NEXT_RESOURCE_VALUE 312
 #define _APS_NEXT_COMMAND_VALUE 32771
-#define _APS_NEXT_CONTROL_VALUE 1011
+#define _APS_NEXT_CONTROL_VALUE 1013
 #define _APS_NEXT_SYMED_VALUE 310
 #endif
 #endif
