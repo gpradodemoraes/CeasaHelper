@@ -59,7 +59,7 @@ BOOL CMyDialog2::PreTranslateMessage(MSG *pMsg) {
 				   LOWORD(pMsg->wParam) == VK_OEM_COMMA || LOWORD(pMsg->wParam) == VK_OEM_PERIOD ||
 				   LOWORD(pMsg->wParam) == VK_BACK || LOWORD(pMsg->wParam) == VK_DELETE ||
 				   LOWORD(pMsg->wParam) == VK_LEFT || LOWORD(pMsg->wParam) == VK_RIGHT ||
-				   LOWORD(pMsg->wParam) == VK_TAB) {
+				   LOWORD(pMsg->wParam) == VK_TAB || LOWORD(pMsg->wParam) == VK_F1) {
 			TRACE("GOOD Key pressed: %c\n", LOWORD(pMsg->wParam));
 
 			return CMyDialog::PreTranslateMessage(pMsg);
