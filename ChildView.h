@@ -5,6 +5,7 @@
 #include "CMyDialog1.h"
 #include "CMyDialog2.h"
 #include "CMyDialog3.h"
+#include "CAboutDlg.h"
 #include <vector>
 #include <memory>
 
@@ -19,6 +20,7 @@ class CChildView : public CWnd {
 	CMyDialog1 m_dlg1;
 	CMyDialog2 m_dlg2;
 	CMyDialog3 m_dlg3;
+	CAboutDlg m_aboutDlg;
 
 	// Operations
    public:

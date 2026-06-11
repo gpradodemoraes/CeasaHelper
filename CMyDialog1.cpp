@@ -14,7 +14,8 @@ BOOL CMyDialog1::OnInitDialog() {
 	pStatic->SetWindowText(
 		_T("F1: Mostrar essa tela\r\n\r\n"
 		   "S : Combinações de somas de lista de números\r\n\r\n"
-		   "P : Provisões de Férias e 13º"));
+		   "P : Provisões de Férias e 13º\r\n\r\n"
+		   "A : Sobre este programa"));
 	return TRUE;
 }
 

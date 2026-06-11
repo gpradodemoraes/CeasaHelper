@@ -1,4 +1,4 @@
-// CeasaHelper.cpp : Defines the class behaviors for the application.
+﻿// CeasaHelper.cpp : Defines the class behaviors for the application.
 //
 
 #include "pch.h"
@@ -15,7 +15,6 @@
 // CCeasaHelperApp
 
 BEGIN_MESSAGE_MAP(CCeasaHelperApp, CWinApp)
-ON_COMMAND(ID_APP_ABOUT, &CCeasaHelperApp::OnAppAbout)
 END_MESSAGE_MAP()
 
 // CCeasaHelperApp construction
@@ -72,37 +71,5 @@ int CCeasaHelperApp::ExitInstance() {
 }
 
 // CCeasaHelperApp message handlers
-
-// CAboutDlg dialog used for App About
-
-class CAboutDlg : public CDialogEx {
-   public:
-	CAboutDlg() noexcept;
-
-// Dialog Data
-#ifdef AFX_DESIGN_TIME
-	enum { IDD = IDD_ABOUTBOX };
-#endif
-
-   protected:
-	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
-
-	// Implementation
-   protected:
-	DECLARE_MESSAGE_MAP()
-};
-
-CAboutDlg::CAboutDlg() noexcept : CDialogEx(IDD_ABOUTBOX) {}
-
-void CAboutDlg::DoDataExchange(CDataExchange *pDX) { CDialogEx::DoDataExchange(pDX); }
-
-BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
-END_MESSAGE_MAP()
-
-// App command to run the dialog
-void CCeasaHelperApp::OnAppAbout() {
-	CAboutDlg aboutDlg;
-	aboutDlg.DoModal();
-}
 
 // CCeasaHelperApp message handlers

@@ -200,6 +200,7 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CAboutDlg.h" />
     <ClInclude Include="ChildView.h" />
     <ClInclude Include="CMyDialog.h" />
     <ClInclude Include="CMyDialog1.h" />
@@ -214,6 +215,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CAboutDlg.cpp" />
     <ClCompile Include="ChildView.cpp" />
     <ClCompile Include="CMyDialog.cpp" />
     <ClCompile Include="CMyDialog1.cpp" />

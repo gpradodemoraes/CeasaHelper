@@ -26,6 +26,11 @@ END_MESSAGE_MAP()
 // CChildView message handlers
 
 void CChildView::ShowDialog(int n) {
+	if (n == 9999) {
+		m_aboutDlg.DoModal();
+		return;
+	}
+
 	for (int i = 0; i < dialogList->size(); ++i) {
 		if (i + 1 == n) {
 			dialogList->at(i)->ShowWindow(SW_SHOW);
@@ -67,6 +72,7 @@ int CChildView::OnCreate(LPCREATESTRUCT lpCreateStruct) {
 	m_dlg1.Create(IDD_MY_DIALOG1, this);
 	m_dlg2.Create(IDD_MY_DIALOG2, this);
 	m_dlg3.Create(IDD_MY_DIALOG3, this);
+	// m_aboutDlg.Create(IDD_ABOUTBOX, this);
 
 	dialogList = std::make_unique<std::vector<CMyDialog *>>();
 
@@ -88,6 +94,7 @@ void CChildView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) {
 	if (is_home_visible) {
 		if (nChar == 'S') ShowDialog(2);
 		if (nChar == 'P') ShowDialog(3);
+		if (nChar == 'A') ShowDialog(9999);
 		return;
 	}
 	CWnd::OnKeyDown(nChar, nRepCnt, nFlags);
