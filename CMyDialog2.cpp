@@ -43,7 +43,7 @@ BOOL CMyDialog2::PreTranslateMessage(MSG *pMsg) {
 				// if (dlg.DoModal() == IDOK) {
 				// 	// User clicked OK
 				// }
-				TRACE(_T("DO MODAL RETURN: %dll", retcode));
+				TRACE(_T("DO MODAL RETURN: %dll"), retcode);
 				achar_soma_free_pointer();
 
 				// const char **dll_build_data = get_dll_data();

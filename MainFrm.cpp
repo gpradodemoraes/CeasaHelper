@@ -44,7 +44,6 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct) {
 		TRACE0("Failed to create view window\n");
 		return -1;
 	}
-
 	if (!m_wndStatusBar.Create(this)) {
 		TRACE0("Failed to create status bar\n");
 		return -1; // fail to create
@@ -72,6 +71,7 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT &cs) {
 	// TODO: Modify the Window class or styles here by modifying
 	//  the CREATESTRUCT cs
 	cs.dwExStyle &= ~WS_EX_CLIENTEDGE;
+	cs.hMenu = NULL;
 	cs.lpszClass = AfxRegisterWndClass(0);
 	return TRUE;
 }

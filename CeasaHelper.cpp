@@ -3,8 +3,6 @@
 
 #include "pch.h"
 #include "framework.h"
-#include "afxwinappex.h"
-#include "afxdialogex.h"
 #include "CeasaHelper.h"
 #include "MainFrm.h"
 
