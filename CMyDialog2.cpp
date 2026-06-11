@@ -11,7 +11,7 @@ IMPLEMENT_DYNAMIC(CMyDialog2, CMyDialog) // ← must be here!
 
 CMyDialog2::~CMyDialog2() {}
 
-void CMyDialog2::OnBnClickedD2Button() { MessageBox(_T("Button Clicked !"), _T("Ready"), MB_OK); }
+void CMyDialog2::OnBnClickedD2Button() { this->PostMessageW(WM_KEYDOWN, VK_RETURN, 0); }
 
 BOOL CMyDialog2::PreTranslateMessage(MSG *pMsg) {
 	if (pMsg->message == WM_KEYDOWN) {
@@ -28,30 +28,30 @@ BOOL CMyDialog2::PreTranslateMessage(MSG *pMsg) {
 				double *result;
 				achar_soma_lista_numeros(&lista, 3.0, 9.0, &result, &progress);
 
-				CShowSomaResults dlg(AfxGetMainWnd()); // 'this' = parent window
-				dlg.m_resultsText = _T("Generated results go here...");
+				CShowSomaResults dlg(AfxGetMainWnd());
+				dlg.m_resultsText.Format(_T("Total de combinações: %d"), static_cast<int>(result[0]));
 
-				dlg.DoModal();
 				INT_PTR retcode = dlg.DoModal();
 
-				if (retcode == -1) {
-					// Dialog failed to create
-					DWORD err = GetLastError();
-					CString msg;
-					msg.Format(_T("DoModal failed. GetLastError = %d"), err);
-					AfxMessageBox(msg);
-				}
-				if (dlg.DoModal() == IDOK) {
-					// User clicked OK
-				}
+				// if (retcode == -1) {
+				// 	// Dialog failed to create
+				// 	DWORD err = GetLastError();
+				// 	CString msg;
+				// 	msg.Format(_T("DoModal failed. GetLastError = %d"), err);
+				// 	AfxMessageBox(msg);
+				// }
+				// if (dlg.DoModal() == IDOK) {
+				// 	// User clicked OK
+				// }
+				TRACE(_T("DO MODAL RETURN: %dll", retcode));
 				achar_soma_free_pointer();
 
-				const char **dll_build_data = get_dll_data();
-				int size = MultiByteToWideChar(CP_ACP, 0, *dll_build_data, -1, NULL, 0);
-				wchar_t *wStr = new wchar_t[size];
-				MultiByteToWideChar(CP_ACP, 0, *dll_build_data, -1, wStr, size);
-				MessageBox(wStr, _T("Ready"), MB_OK);
-				delete[] wStr;
+				// const char **dll_build_data = get_dll_data();
+				// int size = MultiByteToWideChar(CP_ACP, 0, *dll_build_data, -1, NULL, 0);
+				// wchar_t *wStr = new wchar_t[size];
+				// MultiByteToWideChar(CP_ACP, 0, *dll_build_data, -1, wStr, size);
+				// MessageBox(wStr, _T("Ready"), MB_OK);
+				// delete[] wStr;
 				return TRUE;
 			}
 

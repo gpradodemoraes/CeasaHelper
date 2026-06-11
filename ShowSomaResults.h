@@ -12,6 +12,8 @@ class CShowSomaResults : public CDialog {
 	CListBox m_listOutput;
 	BOOL CShowSomaResults::OnInitDialog();
 
+	afx_msg void CShowSomaResults::OnBnClickedClose() { EndDialog(IDOK); }
+
 	enum { IDD = IDD_SHOW_SOMA_RESULTS };
 
    protected:
