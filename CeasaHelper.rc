@@ -1,4 +1,4 @@
-﻿// Microsoft Visual C++ generated resource script.
+// Microsoft Visual C++ generated resource script.
 //
 #pragma code_page(65001)
 
@@ -76,7 +76,7 @@ FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
     EDITTEXT        IDC_D2_MINIMOBOX,54,36,66,14,ES_AUTOHSCROLL
     EDITTEXT        IDC_D2_MAXIMOBOX,54,54,66,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_D2_NUMEROSBOX,14,84,222,102,ES_MULTILINE | ES_AUTOHSCROLL
+    EDITTEXT        IDC_D2_NUMEROSBOX,14,84,222,102,ES_MULTILINE | ES_AUTOVSCROLL | WS_VSCROLL
     PUSHBUTTON      "Calcular",IDC_D2_BUTTON,100,192,50,14
     LTEXT           "CALCULAR SOMAS",IDC_STATIC,15,14,113,8
     LTEXT           "Mínimo",IDC_D2_MINIMO,14,39,34,8,0,WS_EX_RIGHT
