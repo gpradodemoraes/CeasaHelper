@@ -2,6 +2,7 @@
 #include "CMyDialog2.h"
 #include "resource.h"
 #include "ShowSomaResults.h"
+#include "Util.hpp"
 #include <CeasaDllHeader.h>
 #include <vector>
 
@@ -23,6 +24,10 @@ BOOL CMyDialog2::PreTranslateMessage(MSG *pMsg) {
 				char force_new_line[] = { 0x0D, 0x00, 0x0A, 0x00, 0x00, 0x00 };
 				GetDlgItem(IDC_D2_NUMEROSBOX)->SendMessage(EM_REPLACESEL, FALSE, (LPARAM)force_new_line);
 			} else if (GetFocus() == GetDlgItem(IDC_D2_BUTTON)) {
+				CString numerosText;
+				GetDlgItemText(IDC_D2_NUMEROSBOX, numerosText);
+				std::unique_ptr<std::vector<CString>> words = parse_words(&numerosText);
+
 				const std::vector<double> lista = { 1.2, 2.2, 3.2, 4.2, 5.2 };
 				double progress{ 0.0 };
 				double *result;
@@ -83,6 +88,10 @@ void CMyDialog2::OnShowWindow(BOOL bShow, UINT nStatus) {
 
 	if (bShow) {
 		PostMessage(WM_NEXTDLGCTL, (WPARAM)GetDlgItem(IDC_D2_MINIMOBOX)->GetSafeHwnd(), TRUE);
+		SetDlgItemTextW(IDC_D2_MINIMOBOX, _T("1.230,45"));
+		SetDlgItemTextW(IDC_D2_MAXIMOBOX, _T("10.200,99"));
+		SetDlgItemTextW(IDC_D2_NUMEROSBOX, _T("1,00 10,00 100,00\r\n1.000,00\r\n10.000,00\r\n"
+											  "2,00 20,00 200,00\r\n2.000,00\r\n20.000,00\r\n"));
 	}
 }
 
