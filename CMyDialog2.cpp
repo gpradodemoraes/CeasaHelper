@@ -5,6 +5,7 @@
 #include "Util.hpp"
 #include <CeasaDllHeader.h>
 #include <vector>
+#include <tchar.h>
 
 IMPLEMENT_DYNAMIC(CMyDialog2, CMyDialog) // ← must be here!
 
@@ -27,11 +28,24 @@ BOOL CMyDialog2::PreTranslateMessage(MSG *pMsg) {
 				CString numerosText;
 				GetDlgItemText(IDC_D2_NUMEROSBOX, numerosText);
 				std::unique_ptr<std::vector<CString>> words = parse_words(&numerosText);
+				std::vector<double> lista{};
+				lista.reserve(words->size());
 
-				const std::vector<double> lista = { 1.2, 2.2, 3.2, 4.2, 5.2 };
+				for (const auto &w : *words) {
+					lista.push_back(_tstof(w));
+				}
+
+				CString minimoText{};
+				CString maximoText{};
+				GetDlgItemText(IDC_D2_MINIMOBOX, minimoText);
+				GetDlgItemText(IDC_D2_MAXIMOBOX, maximoText);
+
+				double minimo = _tstof(minimoText);
+				double maximo = _tstof(maximoText);
+
 				double progress{ 0.0 };
 				double *result;
-				achar_soma_lista_numeros(&lista, 3.0, 9.0, &result, &progress);
+				achar_soma_lista_numeros(&lista, minimo, maximo, &result, &progress);
 
 				CShowSomaResults dlg(AfxGetMainWnd());
 				dlg.m_resultsText.Format(_T("Total de combinações: %d"), static_cast<int>(result[0]));
