@@ -7,6 +7,7 @@
 #include <vector>
 #include <tchar.h>
 #include <limits>
+#include <string>
 
 IMPLEMENT_DYNAMIC(CMyDialog2, CMyDialog) // ← must be here!
 
@@ -57,10 +58,7 @@ BOOL CMyDialog2::PreTranslateMessage(MSG *pMsg) {
 				m_pDlg->ShowWindow(SW_SHOW);
 
 				CString total_combinações{};
-				total_combinações.Format(_T("010-Total de combinações: %d"), static_cast<int>(result[0]));
 				m_pDlg->m_listOutput.AddString(total_combinações);
-				m_pDlg->m_listOutput.AddString(_T("020-Progresso: 0%"));
-				m_pDlg->m_listOutput.AddString(_T("030-Último a entrar!"));
 
 				double *doubles_array = result;
 				for (double soma = *doubles_array;
@@ -70,18 +68,23 @@ BOOL CMyDialog2::PreTranslateMessage(MSG *pMsg) {
 					for (int number_of_arrays = *reinterpret_cast<int *>(doubles_array++); number_of_arrays > 0;
 						 number_of_arrays--) {
 						std::wstring combination_str;
-						combination_str.append(std::to_wstring(soma));
+						wchar_t buf[64];
+						swprintf_s(buf, L"%.2f", soma);
+						combination_str.append(buf);
 						combination_str.append(L": ");
 
 						while (*doubles_array >
 							   std::numeric_limits<double>::min() + std::numeric_limits<double>::epsilon()) {
-							combination_str.append(L" ");
-							combination_str.append(std::to_wstring(*doubles_array++));
-							combination_str.append(L" +");
+							swprintf_s(buf, L" %.2f +", *doubles_array++);
+							combination_str.append(buf);
+						}
+						if (combination_str.back() == L'+') {
+							combination_str.pop_back();
 						}
 						m_pDlg->m_listOutput.AddString(combination_str.c_str());
 						doubles_array++;
 					}
+					m_pDlg->m_listOutput.AddString(_T("=========================="));
 				}
 
 				achar_soma_free_pointer();

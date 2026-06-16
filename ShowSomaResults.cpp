@@ -11,7 +11,6 @@ CShowSomaResults::~CShowSomaResults() {}
 BOOL CShowSomaResults::OnInitDialog() {
 	CDialog::OnInitDialog();
 
-	m_listOutput.AddString(_T("015-GABRIEL"));
 	SetWindowText(_T("Somas encontradas..."));
 	// Auto-scroll to last item
 	m_listOutput.SetTopIndex(m_listOutput.GetCount() - 1);
