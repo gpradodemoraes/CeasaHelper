@@ -8,7 +8,6 @@ class CShowSomaResults : public CDialog {
    public:
 	CShowSomaResults(CWnd *pParent = nullptr);
 	virtual ~CShowSomaResults();
-	CString m_resultsText;
 	CListBox m_listOutput;
 	BOOL CShowSomaResults::OnInitDialog();
 
@@ -18,5 +17,6 @@ class CShowSomaResults : public CDialog {
 
    protected:
 	virtual void DoDataExchange(CDataExchange *pDX) override;
+	void PostNcDestroy() override;
 	DECLARE_MESSAGE_MAP()
 };

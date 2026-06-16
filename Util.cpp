@@ -35,3 +35,9 @@ std::unique_ptr<std::vector<CString>> parse_words(CString *input) {
 	}
 	return words;
 }
+
+double convert_brazilian_number_format(CString *number_str) {
+	number_str->Remove(_T('.'));
+	number_str->Replace(_T(','), _T('.'));
+	return _tstof(*number_str);
+}

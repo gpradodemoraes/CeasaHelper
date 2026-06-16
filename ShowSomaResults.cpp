@@ -11,7 +11,7 @@ CShowSomaResults::~CShowSomaResults() {}
 BOOL CShowSomaResults::OnInitDialog() {
 	CDialog::OnInitDialog();
 
-	m_listOutput.AddString(m_resultsText);
+	m_listOutput.AddString(_T("015-GABRIEL"));
 	SetWindowText(_T("Somas encontradas..."));
 	// Auto-scroll to last item
 	m_listOutput.SetTopIndex(m_listOutput.GetCount() - 1);
@@ -22,6 +22,11 @@ BOOL CShowSomaResults::OnInitDialog() {
 void CShowSomaResults::DoDataExchange(CDataExchange *pDX) {
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_SOMA_LIST_RESULTS, m_listOutput);
+}
+
+void CShowSomaResults::PostNcDestroy() {
+	CDialog::PostNcDestroy();
+	delete this;
 }
 
 BEGIN_MESSAGE_MAP(CShowSomaResults, CDialog)

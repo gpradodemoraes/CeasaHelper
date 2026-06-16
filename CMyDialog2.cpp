@@ -6,6 +6,7 @@
 #include <CeasaDllHeader.h>
 #include <vector>
 #include <tchar.h>
+#include <limits>
 
 IMPLEMENT_DYNAMIC(CMyDialog2, CMyDialog) // ← must be here!
 
@@ -31,8 +32,8 @@ BOOL CMyDialog2::PreTranslateMessage(MSG *pMsg) {
 				std::vector<double> lista{};
 				lista.reserve(words->size());
 
-				for (const auto &w : *words) {
-					lista.push_back(_tstof(w));
+				for (auto &w : *words) {
+					lista.push_back(convert_brazilian_number_format(&w));
 				}
 
 				CString minimoText{};
@@ -40,37 +41,50 @@ BOOL CMyDialog2::PreTranslateMessage(MSG *pMsg) {
 				GetDlgItemText(IDC_D2_MINIMOBOX, minimoText);
 				GetDlgItemText(IDC_D2_MAXIMOBOX, maximoText);
 
-				double minimo = _tstof(minimoText);
-				double maximo = _tstof(maximoText);
+				double minimo = convert_brazilian_number_format(&minimoText);
+				double maximo = convert_brazilian_number_format(&maximoText);
 
 				double progress{ 0.0 };
 				double *result;
-				achar_soma_lista_numeros(&lista, minimo, maximo, &result, &progress);
+				if (!achar_soma_lista_numeros(&lista, minimo, maximo, &result, &progress)) {
+					AfxMessageBox(_T("Erro ao calcular as combinações."));
+					return TRUE;
+				}
 
-				CShowSomaResults dlg(AfxGetMainWnd());
-				dlg.m_resultsText.Format(_T("Total de combinações: %d"), static_cast<int>(result[0]));
+				CShowSomaResults *m_pDlg = nullptr;
+				m_pDlg = new CShowSomaResults(this);
+				m_pDlg->Create(IDD_SHOW_SOMA_RESULTS, this);
+				m_pDlg->ShowWindow(SW_SHOW);
 
-				INT_PTR retcode = dlg.DoModal();
+				CString total_combinações{};
+				total_combinações.Format(_T("010-Total de combinações: %d"), static_cast<int>(result[0]));
+				m_pDlg->m_listOutput.AddString(total_combinações);
+				m_pDlg->m_listOutput.AddString(_T("020-Progresso: 0%"));
+				m_pDlg->m_listOutput.AddString(_T("030-Último a entrar!"));
 
-				// if (retcode == -1) {
-				// 	// Dialog failed to create
-				// 	DWORD err = GetLastError();
-				// 	CString msg;
-				// 	msg.Format(_T("DoModal failed. GetLastError = %d"), err);
-				// 	AfxMessageBox(msg);
-				// }
-				// if (dlg.DoModal() == IDOK) {
-				// 	// User clicked OK
-				// }
-				TRACE(_T("DO MODAL RETURN: %dll"), retcode);
+				double *doubles_array = result;
+				for (double soma = *doubles_array;
+					 soma > std::numeric_limits<double>::min() + std::numeric_limits<double>::epsilon();
+					 soma = *doubles_array) {
+					doubles_array++;
+					for (int number_of_arrays = *reinterpret_cast<int *>(doubles_array++); number_of_arrays > 0;
+						 number_of_arrays--) {
+						std::wstring combination_str;
+						combination_str.append(std::to_wstring(soma));
+						combination_str.append(L": ");
+
+						while (*doubles_array >
+							   std::numeric_limits<double>::min() + std::numeric_limits<double>::epsilon()) {
+							combination_str.append(L" ");
+							combination_str.append(std::to_wstring(*doubles_array++));
+							combination_str.append(L" +");
+						}
+						m_pDlg->m_listOutput.AddString(combination_str.c_str());
+						doubles_array++;
+					}
+				}
+
 				achar_soma_free_pointer();
-
-				// const char **dll_build_data = get_dll_data();
-				// int size = MultiByteToWideChar(CP_ACP, 0, *dll_build_data, -1, NULL, 0);
-				// wchar_t *wStr = new wchar_t[size];
-				// MultiByteToWideChar(CP_ACP, 0, *dll_build_data, -1, wStr, size);
-				// MessageBox(wStr, _T("Ready"), MB_OK);
-				// delete[] wStr;
 				return TRUE;
 			}
 
