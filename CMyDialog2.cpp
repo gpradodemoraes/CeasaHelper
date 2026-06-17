@@ -26,6 +26,25 @@ afx_msg LRESULT CMyDialog2::OnDialogClosed(WPARAM wParam, LPARAM lParam) {
 	return 0;
 }
 
+static void UpdateListBoxHorizontalExtent(CListBox *m_listBox) {
+	CClientDC dc(m_listBox);
+	CFont *pOldFont = dc.SelectObject(m_listBox->GetFont());
+
+	int nMaxWidth = 0;
+	for (int i = 0; i < m_listBox->GetCount(); i++) {
+		CString str;
+		m_listBox->GetText(i, str);
+
+		CSize sz = dc.GetTextExtent(str);
+		if (sz.cx > nMaxWidth) nMaxWidth = sz.cx;
+	}
+
+	dc.SelectObject(pOldFont);
+
+	// Add a small margin so text isn't flush against the edge
+	m_listBox->SetHorizontalExtent(nMaxWidth + 10);
+}
+
 BOOL CMyDialog2::PreTranslateMessage(MSG *pMsg) {
 	if (pMsg->message == WM_KEYDOWN) {
 		// SetDlgItemInt(IDC_D2_NUMEROSBOX, LOWORD(pMsg->wParam));
@@ -107,6 +126,7 @@ BOOL CMyDialog2::PreTranslateMessage(MSG *pMsg) {
 				}
 
 				achar_soma_free_pointer();
+				UpdateListBoxHorizontalExtent(&m_pDlg->m_listOutput);
 				return TRUE;
 			}
 
@@ -139,8 +159,8 @@ void CMyDialog2::OnShowWindow(BOOL bShow, UINT nStatus) {
 
 	if (bShow) {
 		PostMessage(WM_NEXTDLGCTL, (WPARAM)GetDlgItem(IDC_D2_MINIMOBOX)->GetSafeHwnd(), TRUE);
-		SetDlgItemTextW(IDC_D2_MINIMOBOX, _T("1.230,45"));
-		SetDlgItemTextW(IDC_D2_MAXIMOBOX, _T("10.200,99"));
+		SetDlgItemTextW(IDC_D2_MINIMOBOX, _T("3.700,45"));
+		SetDlgItemTextW(IDC_D2_MAXIMOBOX, _T("4.000,99"));
 		SetDlgItemTextW(IDC_D2_NUMEROSBOX, _T("1,00 10,00 100,00\r\n1.000,00\r\n10.000,00\r\n"
 											  "2,00 20,00 200,00\r\n2.000,00\r\n20.000,00\r\n"
 											  "3,00 30,00 300,00\r\n3.000,00\r\n30.000,00\r\n"
