@@ -1,7 +1,6 @@
 ﻿#include "pch.h"
 #include "CMyDialog2.h"
 #include "resource.h"
-#include "ShowSomaResults.h"
 #include "Util.hpp"
 #include <CeasaDllHeader.h>
 #include <vector>
@@ -16,6 +15,14 @@ IMPLEMENT_DYNAMIC(CMyDialog2, CMyDialog) // ← must be here!
 CMyDialog2::~CMyDialog2() {}
 
 void CMyDialog2::OnBnClickedD2Button() { this->PostMessageW(WM_KEYDOWN, VK_RETURN, 0); }
+
+afx_msg LRESULT CMyDialog2::OnDialogClosed(WPARAM wParam, LPARAM lParam) {
+	if (m_pDlg && IsWindow(m_pDlg->GetSafeHwnd())) {
+		m_pDlg->DestroyWindow(); // PostNcDestroy will delete the object
+		m_pDlg = nullptr;
+	}
+	return 0;
+}
 
 BOOL CMyDialog2::PreTranslateMessage(MSG *pMsg) {
 	if (pMsg->message == WM_KEYDOWN) {
@@ -52,7 +59,8 @@ BOOL CMyDialog2::PreTranslateMessage(MSG *pMsg) {
 					return TRUE;
 				}
 
-				CShowSomaResults *m_pDlg = nullptr;
+				m_pDlg = nullptr;
+				TRACE("======>PONTEIRO CRIADO: %lld\n", this);
 				m_pDlg = new CShowSomaResults(this);
 				m_pDlg->Create(IDD_SHOW_SOMA_RESULTS, this);
 				m_pDlg->ShowWindow(SW_SHOW);
@@ -115,6 +123,7 @@ BOOL CMyDialog2::PreTranslateMessage(MSG *pMsg) {
 void CMyDialog2::DoDataExchange(CDataExchange *pDX) { CDialog::DoDataExchange(pDX); }
 
 void CMyDialog2::OnShowWindow(BOOL bShow, UINT nStatus) {
+	TRACE("Listening for message value: %d\n", WM_SOMA_DIALOG_CLOSED);
 	CDialog::OnShowWindow(bShow, nStatus);
 
 	if (bShow) {
@@ -126,8 +135,9 @@ void CMyDialog2::OnShowWindow(BOOL bShow, UINT nStatus) {
 	}
 }
 
-BEGIN_MESSAGE_MAP(CMyDialog2, CDialog) // ← must be here!
-ON_WM_KEYDOWN()
+BEGIN_MESSAGE_MAP(CMyDialog2, CMyDialog)
 ON_WM_SHOWWINDOW()
+ON_WM_MOVE()
+ON_MESSAGE(WM_SOMA_DIALOG_CLOSED, &CMyDialog2::OnDialogClosed)
 ON_BN_CLICKED(IDC_D2_BUTTON, &CMyDialog2::OnBnClickedD2Button)
 END_MESSAGE_MAP()

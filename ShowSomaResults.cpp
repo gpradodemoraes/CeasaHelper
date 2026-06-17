@@ -4,8 +4,6 @@
 
 IMPLEMENT_DYNAMIC(CShowSomaResults, CDialog)
 
-CShowSomaResults::CShowSomaResults(CWnd *pParent) : CDialog(IDD_SHOW_SOMA_RESULTS, pParent) {}
-
 CShowSomaResults::~CShowSomaResults() {}
 
 BOOL CShowSomaResults::OnInitDialog() {
@@ -28,6 +26,12 @@ void CShowSomaResults::PostNcDestroy() {
 	delete this;
 }
 
+void CShowSomaResults::OnClose() {
+	if (m_pParentWnd) m_pParentWnd->PostMessage(WM_SOMA_DIALOG_CLOSED, 0, 0);
+	CDialog::OnClose();
+}
+
 BEGIN_MESSAGE_MAP(CShowSomaResults, CDialog)
 ON_BN_CLICKED(IDC_SHOW_SOMA_CLOSE, &CShowSomaResults::OnBnClickedClose)
+ON_WM_CLOSE()
 END_MESSAGE_MAP()

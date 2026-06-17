@@ -21,7 +21,7 @@
 #define IDC_D2_NUMEROS 1010
 #define IDC_SOMA_LIST_RESULTS 1011
 #define IDC_SHOW_SOMA_CLOSE 1012
-
+#define WM_SOMA_DIALOG_CLOSED (WM_APP + 1)
 // Next default values for new objects
 //
 #ifdef APSTUDIO_INVOKED
