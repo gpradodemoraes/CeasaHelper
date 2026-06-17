@@ -1,5 +1,6 @@
 ﻿#include "pch.h"
 #include "CMyDialog2.h"
+#include "SomaProgressBar.hpp"
 #include "resource.h"
 #include "Util.hpp"
 #include <CeasaDllHeader.h>
@@ -34,6 +35,23 @@ BOOL CMyDialog2::PreTranslateMessage(MSG *pMsg) {
 				char force_new_line[] = { 0x0D, 0x00, 0x0A, 0x00, 0x00, 0x00 };
 				GetDlgItem(IDC_D2_NUMEROSBOX)->SendMessage(EM_REPLACESEL, FALSE, (LPARAM)force_new_line);
 			} else if (GetFocus() == GetDlgItem(IDC_D2_BUTTON)) {
+				/*
+				DIALOG BAR TESTE
+				*/
+				CSomaProgressBarDlg m_Progress;
+				INT_PTR retcode = m_Progress.DoModal();
+				// CSomaProgressBarDlg* m_pProgressDlg = new CSomaProgressBarDlg();
+				// m_pProgressDlg->Create(IDD_SOMA_DIALOGBAR, this);
+				// m_pProgressDlg->ShowWindow(SW_SHOW);
+
+				// CSomaProgressBarDlg *m_Progress = new CSomaProgressBarDlg();
+				// m_Progress->Create(IDD_SOMA_DIALOGBAR, this);
+				// m_Progress->ShowWindow(SW_SHOW);
+				return TRUE;
+				/*
+				DIALOG BAR TESTE
+				*/
+
 				CString numerosText;
 				GetDlgItemText(IDC_D2_NUMEROSBOX, numerosText);
 				std::unique_ptr<std::vector<CString>> words = parse_words(&numerosText);
