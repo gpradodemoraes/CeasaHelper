@@ -10,6 +10,7 @@ class CSomaProgressBarDlg : public CDialogEx {
 	CSomaProgressBarDlg() noexcept;
 	BOOL OnInitDialog();
 	CProgressCtrl m_progressBar;
+	double *progress;
 
 	enum { IDD = IDD_SOMA_DIALOGBAR };
 
@@ -18,5 +19,7 @@ class CSomaProgressBarDlg : public CDialogEx {
 
 	// Implementation
    protected:
+	afx_msg LRESULT OnUpdateProgress(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnWorkDone(WPARAM wParam, LPARAM lParam);
 	DECLARE_MESSAGE_MAP()
 };

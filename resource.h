@@ -38,3 +38,5 @@
 #endif
 
 #define WM_SOMA_DIALOG_CLOSED (WM_APP + 1)
+#define WM_UPDATE_PROGRESS (WM_USER + 2)
+#define WM_WORK_DONE (WM_USER + 3)

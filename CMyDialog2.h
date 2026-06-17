@@ -14,6 +14,7 @@ class CMyDialog2 : public CMyDialog {
 
    private:
 	CShowSomaResults *m_pDlg;
+	static UINT WorkerThread(LPVOID pParam);
 
    protected:
 	virtual void OnOK() override {}

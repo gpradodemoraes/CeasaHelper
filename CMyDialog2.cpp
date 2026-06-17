@@ -8,6 +8,7 @@
 #include <tchar.h>
 #include <limits>
 #include <string>
+#include <thread>
 
 IMPLEMENT_DYNAMIC(CMyDialog2, CMyDialog) // ← must be here!
 
@@ -35,23 +36,6 @@ BOOL CMyDialog2::PreTranslateMessage(MSG *pMsg) {
 				char force_new_line[] = { 0x0D, 0x00, 0x0A, 0x00, 0x00, 0x00 };
 				GetDlgItem(IDC_D2_NUMEROSBOX)->SendMessage(EM_REPLACESEL, FALSE, (LPARAM)force_new_line);
 			} else if (GetFocus() == GetDlgItem(IDC_D2_BUTTON)) {
-				/*
-				DIALOG BAR TESTE
-				*/
-				CSomaProgressBarDlg m_Progress;
-				INT_PTR retcode = m_Progress.DoModal();
-				// CSomaProgressBarDlg* m_pProgressDlg = new CSomaProgressBarDlg();
-				// m_pProgressDlg->Create(IDD_SOMA_DIALOGBAR, this);
-				// m_pProgressDlg->ShowWindow(SW_SHOW);
-
-				// CSomaProgressBarDlg *m_Progress = new CSomaProgressBarDlg();
-				// m_Progress->Create(IDD_SOMA_DIALOGBAR, this);
-				// m_Progress->ShowWindow(SW_SHOW);
-				return TRUE;
-				/*
-				DIALOG BAR TESTE
-				*/
-
 				CString numerosText;
 				GetDlgItemText(IDC_D2_NUMEROSBOX, numerosText);
 				std::unique_ptr<std::vector<CString>> words = parse_words(&numerosText);
@@ -72,10 +56,19 @@ BOOL CMyDialog2::PreTranslateMessage(MSG *pMsg) {
 
 				double progress{ 0.0 };
 				double *result;
-				if (!achar_soma_lista_numeros(&lista, minimo, maximo, &result, &progress)) {
-					AfxMessageBox(_T("Erro ao calcular as combinações."));
-					return TRUE;
-				}
+
+				CSomaProgressBarDlg m_pProgressDlg;
+				m_pProgressDlg.progress = &progress;
+				AfxBeginThread(WorkerThread, &m_pProgressDlg);
+
+				std::thread do_soma(achar_soma_lista_numeros, &lista, minimo, maximo, &result, &progress);
+
+				// if (!achar_soma_lista_numeros(&lista, minimo, maximo, &result, &progress)) {
+				// 	AfxMessageBox(_T("Erro ao calcular as combinações."));
+				// 	return TRUE;
+				// }
+				INT_PTR retcode = m_pProgressDlg.DoModal();
+				do_soma.join();
 
 				m_pDlg = nullptr;
 				TRACE("======>PONTEIRO CRIADO: %lld\n", this);
@@ -149,8 +142,21 @@ void CMyDialog2::OnShowWindow(BOOL bShow, UINT nStatus) {
 		SetDlgItemTextW(IDC_D2_MINIMOBOX, _T("1.230,45"));
 		SetDlgItemTextW(IDC_D2_MAXIMOBOX, _T("10.200,99"));
 		SetDlgItemTextW(IDC_D2_NUMEROSBOX, _T("1,00 10,00 100,00\r\n1.000,00\r\n10.000,00\r\n"
-											  "2,00 20,00 200,00\r\n2.000,00\r\n20.000,00\r\n"));
+											  "2,00 20,00 200,00\r\n2.000,00\r\n20.000,00\r\n"
+											  "3,00 30,00 300,00\r\n3.000,00\r\n30.000,00\r\n"
+											  "4,00 40,00 400,00\r\n4.000,00\r\n40.000,00\r\n"));
 	}
+}
+
+UINT CMyDialog2::WorkerThread(LPVOID pParam) {
+	CSomaProgressBarDlg *pDlg = (CSomaProgressBarDlg *)pParam;
+	while (*pDlg->progress < 0.9999) {
+		std::this_thread::sleep_for(std::chrono::milliseconds(200));
+		pDlg->PostMessage(WM_UPDATE_PROGRESS, (WPARAM) static_cast<int>(*pDlg->progress * 100), 0);
+	}
+
+	pDlg->PostMessage(WM_WORK_DONE, 0, 0);
+	return 0;
 }
 
 BEGIN_MESSAGE_MAP(CMyDialog2, CMyDialog)

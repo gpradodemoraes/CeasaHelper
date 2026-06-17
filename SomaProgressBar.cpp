@@ -19,5 +19,19 @@ void CSomaProgressBarDlg::DoDataExchange(CDataExchange *pDX) {
 	DDX_Control(pDX, IDC_SOMA_PROGRESS, m_progressBar);
 }
 
+LRESULT CSomaProgressBarDlg::OnUpdateProgress(WPARAM wParam, LPARAM lParam) {
+	m_progressBar.SetPos((int)wParam);
+	return 0;
+}
+
+LRESULT CSomaProgressBarDlg::OnWorkDone(WPARAM wParam, LPARAM lParam) {
+	m_progressBar.SetPos(100); // ensure it shows complete
+							   // re-enable your Start button here if you have one
+	EndDialog(IDOK);
+	return 0;
+}
+
 BEGIN_MESSAGE_MAP(CSomaProgressBarDlg, CDialogEx)
+ON_MESSAGE(WM_UPDATE_PROGRESS, OnUpdateProgress)
+ON_MESSAGE(WM_WORK_DONE, OnWorkDone)
 END_MESSAGE_MAP()
