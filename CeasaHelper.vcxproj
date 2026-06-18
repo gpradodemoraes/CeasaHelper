@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -207,6 +207,7 @@
     <ClInclude Include="CMyDialog1.h" />
     <ClInclude Include="CMyDialog2.h" />
     <ClInclude Include="CMyDialog3.h" />
+    <ClInclude Include="CDivisaoTXT.h" />
     <ClInclude Include="CeasaHelper.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="MainFrm.h" />
@@ -224,6 +225,7 @@
     <ClCompile Include="CMyDialog1.cpp" />
     <ClCompile Include="CMyDialog2.cpp" />
     <ClCompile Include="CMyDialog3.cpp" />
+    <ClCompile Include="CDivisaoTXT.cpp" />
     <ClCompile Include="CeasaHelper.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="pch.cpp">

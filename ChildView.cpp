@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include "framework.h"
+#include "resource.h"
 #include "CeasaHelper.h"
 #include "ChildView.h"
 
@@ -72,13 +73,14 @@ int CChildView::OnCreate(LPCREATESTRUCT lpCreateStruct) {
 	m_dlg1.Create(IDD_MY_DIALOG1, this);
 	m_dlg2.Create(IDD_MY_DIALOG2, this);
 	m_dlg3.Create(IDD_MY_DIALOG3, this);
-	// m_aboutDlg.Create(IDD_ABOUTBOX, this);
+	m_divisaoTXT.Create(IDD_DIVISAOTXT_DIALOG, this);
 
 	dialogList = std::make_unique<std::vector<CMyDialog *>>();
 
 	dialogList->push_back(static_cast<CMyDialog *>(&m_dlg1));
 	dialogList->push_back(static_cast<CMyDialog *>(&m_dlg2));
 	dialogList->push_back(static_cast<CMyDialog *>(&m_dlg3));
+	dialogList->push_back(static_cast<CMyDialog *>(&m_divisaoTXT));
 
 	ShowDialog(1);
 
@@ -94,6 +96,7 @@ void CChildView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) {
 	if (is_home_visible) {
 		if (nChar == 'S') ShowDialog(2);
 		if (nChar == 'P') ShowDialog(3);
+		if (nChar == 'D') ShowDialog(4);
 		if (nChar == 'A') ShowDialog(9999);
 		return;
 	}
