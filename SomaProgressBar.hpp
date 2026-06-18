@@ -19,6 +19,7 @@ class CSomaProgressBarDlg : public CDialogEx {
 
 	// Implementation
    protected:
+	void OnCancel();
 	afx_msg LRESULT OnUpdateProgress(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnWorkDone(WPARAM wParam, LPARAM lParam);
 	DECLARE_MESSAGE_MAP()

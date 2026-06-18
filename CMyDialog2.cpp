@@ -9,6 +9,7 @@
 #include <limits>
 #include <string>
 #include <thread>
+#include <future>
 
 IMPLEMENT_DYNAMIC(CMyDialog2, CMyDialog) // ← must be here!
 
@@ -80,14 +81,24 @@ BOOL CMyDialog2::PreTranslateMessage(MSG *pMsg) {
 				m_pProgressDlg.progress = &progress;
 				AfxBeginThread(WorkerThread, &m_pProgressDlg);
 
-				std::thread do_soma(achar_soma_lista_numeros, &lista, minimo, maximo, &result, &progress);
-
+				std::future<bool> fut_result =
+					std::async(achar_soma_lista_numeros, &lista, minimo, maximo, &result, &progress);
 				// if (!achar_soma_lista_numeros(&lista, minimo, maximo, &result, &progress)) {
 				// 	AfxMessageBox(_T("Erro ao calcular as combinações."));
 				// 	return TRUE;
 				// }
 				INT_PTR retcode = m_pProgressDlg.DoModal();
-				do_soma.join();
+				fut_result.wait();
+				bool it_worked = fut_result.get();
+
+				if (retcode != IDCANCEL && !it_worked) {
+					AfxMessageBox(_T("Erro ao calcular as combinações."));
+					return TRUE;
+				}
+				if (retcode == IDCANCEL && !it_worked) {
+					achar_soma_free_pointer();
+					return TRUE;
+				}
 
 				m_pDlg = nullptr;
 				TRACE("======>PONTEIRO CRIADO: %lld\n", this);
@@ -172,10 +183,13 @@ UINT CMyDialog2::WorkerThread(LPVOID pParam) {
 	CSomaProgressBarDlg *pDlg = (CSomaProgressBarDlg *)pParam;
 	while (*pDlg->progress < 0.9999) {
 		std::this_thread::sleep_for(std::chrono::milliseconds(200));
+		if (*pDlg->progress < 0.0) break; // sinal de cancelamento
 		pDlg->PostMessage(WM_UPDATE_PROGRESS, (WPARAM) static_cast<int>(*pDlg->progress * 100), 0);
 	}
-
-	pDlg->PostMessage(WM_WORK_DONE, 0, 0);
+	if (*pDlg->progress < 0.0)
+		pDlg->PostMessage(WM_WORK_DONE, IDCANCEL, 0);
+	else
+		pDlg->PostMessage(WM_WORK_DONE, IDOK, 0);
 	return 0;
 }
 
