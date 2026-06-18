@@ -186,7 +186,9 @@ UINT CMyDialog2::WorkerThread(LPVOID pParam) {
 		if (*pDlg->progress < 0.0) break; // sinal de cancelamento
 		pDlg->PostMessage(WM_UPDATE_PROGRESS, (WPARAM) static_cast<int>(*pDlg->progress * 100), 0);
 	}
-	if (*pDlg->progress < 0.0)
+	if (*pDlg->progress < -99.0)
+		pDlg->PostMessage(WM_WORK_DONE, IDOK, 0); // usuário não cancelou mas deu erro!
+	else if (*pDlg->progress < 0.0)
 		pDlg->PostMessage(WM_WORK_DONE, IDCANCEL, 0);
 	else
 		pDlg->PostMessage(WM_WORK_DONE, IDOK, 0);
