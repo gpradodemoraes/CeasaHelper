@@ -98,6 +98,7 @@ void CChildView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) {
 		if (nChar == 'P') ShowDialog(3);
 		if (nChar == 'D') ShowDialog(4);
 		if (nChar == 'A') ShowDialog(9999);
+		if (nChar == 'X') AfxGetApp()->GetMainWnd()->PostMessage(WM_CLOSE);
 		return;
 	}
 	CWnd::OnKeyDown(nChar, nRepCnt, nFlags);
