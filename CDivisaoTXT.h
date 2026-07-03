@@ -6,7 +6,7 @@
 class CDivisaoTXT : public CMyDialog {
 	DECLARE_DYNAMIC(CDivisaoTXT)
    public:
-	CDivisaoTXT(CWnd *pParent = nullptr) : CMyDialog(IDD_MY_DIALOG3, pParent) {}
+	CDivisaoTXT(CWnd *pParent = nullptr) : CMyDialog(IDD_DIVISAOTXT_DIALOG, pParent) {}
 
 	virtual ~CDivisaoTXT();
 

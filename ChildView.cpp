@@ -108,7 +108,7 @@ void CChildView::OnSize(UINT nType, int cx, int cy) {
 	CWnd::OnSize(nType, cx, cy);
 
 	CMyDialog *dialogList[] = { static_cast<CMyDialog *>(&m_dlg1), static_cast<CMyDialog *>(&m_dlg2),
-								static_cast<CMyDialog *>(&m_dlg3) };
+								static_cast<CMyDialog *>(&m_dlg3), static_cast<CMyDialog *>(&m_divisaoTXT) };
 	for (CMyDialog *dlg : dialogList) {
 		if (dlg && IsWindow(dlg->GetSafeHwnd())) {
 			dlg->CenterWindow(this);
