@@ -8,6 +8,7 @@ class CDivisaoTXT : public CMyDialog {
    public:
 	CDivisaoTXT(CWnd *pParent = nullptr) : CMyDialog(IDD_DIVISAOTXT_DIALOG, pParent) {}
 
+	void OnProcurarArquivoClick();
 	virtual ~CDivisaoTXT();
 
 	// enum { IDD = IDD_MY_DIALOG1 };
