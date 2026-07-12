@@ -30,13 +30,23 @@ void CDivisaoTXT::OnProcessarArquivoClick() {
 
 	CT2CA utf8Str(fileDivisaoTXTfullPath, CP_UTF8);
 	const char *utf8FilePath = utf8Str;
-
-	if (callDivisaoTXT(utf8FilePath, error) > 0) {
+	char results[4 * 1024] = { 0 };
+	if (callDivisaoTXT(utf8FilePath, results, error) > 0) {
 		CA2W wideStr(error, CP_UTF8); // explicit UTF-8 -> wide conversion
 		CString str(wideStr);		  // now a normal CString (Unicode build)
 		AfxMessageBox(wideStr, MB_OK | MB_ICONERROR);
 		return;
 	}
+	CString printResult;
+	for (int i = 0; i < 4; i++) {
+		CA2W wideStr(results + i * 1024, CP_UTF8);
+		printResult.Append(wideStr);
+		printResult.Append(L"\r\n");
+	}
+	printResult.Append(L"\r\n");
+	CA2W wideStr(error, CP_UTF8);
+	printResult.Append(wideStr);
+	AfxMessageBox(printResult, MB_OK | MB_ICONASTERISK);
 }
 
 CDivisaoTXT::~CDivisaoTXT() {}
