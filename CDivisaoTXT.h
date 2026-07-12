@@ -12,6 +12,7 @@ class CDivisaoTXT : public CMyDialog {
 	}
 
 	void OnProcurarArquivoClick();
+	void OnProcessarArquivoClick();
 	virtual ~CDivisaoTXT();
 
    private:

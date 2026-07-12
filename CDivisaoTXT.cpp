@@ -1,6 +1,8 @@
 ﻿#include "pch.h"
 #include "CDivisaoTXT.h"
+#include "CeasaDllHeader.h"
 #include <afxdlgs.h>
+#include <atlconv.h>
 
 IMPLEMENT_DYNAMIC(CDivisaoTXT, CMyDialog) // ← must be here!
 
@@ -20,8 +22,20 @@ void CDivisaoTXT::OnProcurarArquivoClick() {
 		fileDivisaoTXTfullPath = fileDlg.GetPathName(); // Full path
 		m_staticFilePath.SetWindowTextW(fileDivisaoTXTfullPath);
 		// CString strFileName = fileDlg.GetFileName(); // Just the filename
-		// Do something with the selected file
-		// AfxMessageBox(strPath);
+	}
+}
+
+void CDivisaoTXT::OnProcessarArquivoClick() {
+	char error[1024] = { 0 };
+
+	CT2CA utf8Str(fileDivisaoTXTfullPath, CP_UTF8);
+	const char *utf8FilePath = utf8Str;
+
+	if (callDivisaoTXT(utf8FilePath, error) > 0) {
+		CA2W wideStr(error, CP_UTF8); // explicit UTF-8 -> wide conversion
+		CString str(wideStr);		  // now a normal CString (Unicode build)
+		AfxMessageBox(wideStr, MB_OK | MB_ICONERROR);
+		return;
 	}
 }
 
@@ -36,4 +50,5 @@ void CDivisaoTXT::DoDataExchange(CDataExchange *pDX) {
 BEGIN_MESSAGE_MAP(CDivisaoTXT, CDialog) // ← must be here!
 ON_WM_KEYDOWN()
 ON_BN_CLICKED(IDC_DIVISAOTXT_B, &CDivisaoTXT::OnProcurarArquivoClick)
+ON_BN_CLICKED(IDC_DIVISAOTXT_PROCESSAR_B, &CDivisaoTXT::OnProcessarArquivoClick)
 END_MESSAGE_MAP()
