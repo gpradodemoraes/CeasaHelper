@@ -3,6 +3,7 @@
 #include "CeasaDllHeader.h"
 #include <afxdlgs.h>
 #include <atlconv.h>
+#include <shtypes.h>
 
 IMPLEMENT_DYNAMIC(CDivisaoTXT, CMyDialog) // ← must be here!
 
@@ -30,7 +31,7 @@ void CDivisaoTXT::OnProcessarArquivoClick() {
 
 	CT2CA utf8Str(fileDivisaoTXTfullPath, CP_UTF8);
 	const char *utf8FilePath = utf8Str;
-	char results[4 * 1024] = { 0 };
+	char results[5 * 1024] = { 0 };
 	if (callDivisaoTXT(utf8FilePath, results, error) > 0) {
 		CA2W wideStr(error, CP_UTF8); // explicit UTF-8 -> wide conversion
 		CString str(wideStr);		  // now a normal CString (Unicode build)
@@ -44,9 +45,20 @@ void CDivisaoTXT::OnProcessarArquivoClick() {
 		printResult.Append(L"\r\n");
 	}
 	printResult.Append(L"\r\n");
-	CA2W wideStr(error, CP_UTF8);
-	printResult.Append(wideStr);
+	CA2W excel(error, CP_UTF8);
+	printResult.Append(excel);
 	AfxMessageBox(printResult, MB_OK | MB_ICONASTERISK);
+
+	CA2W path(results + 4 * 1024, CP_UTF8);
+
+	CString excelFilePath = CString(path);
+	excelFilePath.Append(L"\\");
+	excelFilePath.Append(excel);
+	PIDLIST_ABSOLUTE pidl = ILCreateFromPath(excelFilePath);
+	if (pidl) {
+		SHOpenFolderAndSelectItems(pidl, 0, NULL, 0);
+		ILFree(pidl);
+	}
 }
 
 CDivisaoTXT::~CDivisaoTXT() {}
