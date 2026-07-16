@@ -60,6 +60,9 @@
     <ClInclude Include="SomaProgressBar.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CDivisaoTXT.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CeasaHelper.cpp">
@@ -96,6 +99,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SomaProgressBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CDivisaoTXT.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
